@@ -1,0 +1,27 @@
+{
+	"name": "todo-youdo",
+	"version": "1.0.0",
+	"description": "todo application on Angular + Nest",
+	"scripts": {
+		"install": "npm run install:server",
+		"install:server": "(cd ./server && npm install)",
+		"postinstall": "cd ./server && npm run build",
+		"start": "npm run start:prod",
+		"start:prod": "(cd ./server && ./node_modules/.bin/ts-node ./src/main.ts)",
+		"start:dev": "npm run start:server",
+		"start:server": "(cd ./server && npm run start:dev)"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ChronoHole/todo-youdo.git"
+	},
+	"author": "Nikael Mellraw",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/ChronoHole/todo-youdo/issues"
+	},
+	"homepage": "https://github.com/ChronoHole/todo-youdo#readme",
+	"engines": {
+		"node": "16.x"
+	}
+}
