@@ -17,7 +17,7 @@ const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
     ConfigModule.forRoot({ isGlobal: true, envFilePath }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../../client/', 'static'),
+      rootPath: join(__dirname, '..', '..', 'client', 'static'),
     }),
     ProjectModule,
     TodoModule,
