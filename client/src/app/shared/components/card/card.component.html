@@ -1,0 +1,8 @@
+<mat-card class="project-card">
+  <mat-card-title>{{ title }}</mat-card-title>
+  <mat-card-content class="project-card-content">
+    <section class="todos-section" *ngFor="let todo of todos">
+      <mat-checkbox>{{ todo.title }}</mat-checkbox>
+    </section>
+  </mat-card-content>
+</mat-card>

@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+@import "scss/mat-components/index";
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
