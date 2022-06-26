@@ -1,4 +1,12 @@
-import { Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { Project } from './project.entity';
 
@@ -10,5 +18,12 @@ export class ProjectController {
   @Get()
   public getAllProjects(): Promise<Project[]> {
     return this.service.getAllProjects();
+  }
+
+  @Delete(':id')
+  public removeProject(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Project> {
+    return this.service.removeProject(id);
   }
 }

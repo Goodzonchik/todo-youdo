@@ -1,7 +1,7 @@
-<div class="wrapper">
-  <mat-grid-list [cols]="cols">
-    <mat-grid-tile *ngFor="let project of projects">
-      <app-card [title]="project.title" [todos]="project.todos"></app-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="flex-container" *ngFor="let project of projects | sortByLength">
+  <app-card
+    [title]="project.title"
+    [projectId]="project.id"
+    [todos]="project.todos"
+  ></app-card>
 </div>

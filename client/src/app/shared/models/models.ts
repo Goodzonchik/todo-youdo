@@ -9,3 +9,10 @@ export interface Todos {
   title: string;
   isCompleted: boolean;
 }
+
+export class Todo {
+  project: string;
+  title: string;
+}
+
+export type Project = Pick<Projects, 'title'>;

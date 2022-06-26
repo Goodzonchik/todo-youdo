@@ -1,6 +1,7 @@
 import { DialogComponent } from './../dialog/dialog.component';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Projects } from '../../models/models';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,14 +11,14 @@ import { MatDialog } from '@angular/material/dialog';
 export class ToolbarComponent {
   constructor(public dialog: MatDialog) {}
 
+  @Input() projects: Projects[];
+
   openDialog() {
     let dialogRef = this.dialog.open(DialogComponent, {
-      height: 'auto',
-      width: '400px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
+      width: '300px',
+      disableClose: true,
+      minHeight: '250px',
+      data: this.projects,
     });
   }
 }

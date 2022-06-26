@@ -3,6 +3,7 @@ import { CreateTodoDto } from './todo.dto';
 import {
   Body,
   Controller,
+  Delete,
   Inject,
   Param,
   ParseIntPipe,
@@ -27,5 +28,10 @@ export class TodoController {
     @Param('todoid', ParseIntPipe) todoId: number,
   ): Promise<Todo> {
     return this.service.changeTodoStatus(projectId, todoId);
+  }
+
+  @Delete('todos/:id')
+  public removeTodo(@Param('id', ParseIntPipe) id: number): Promise<Todo> {
+    return this.service.removeTodo(id);
   }
 }

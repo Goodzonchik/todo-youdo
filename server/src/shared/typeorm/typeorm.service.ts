@@ -18,11 +18,11 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       password: this.config.get<string>('DATABASE_PASSWORD'),
       entities: ['dist/**/*.entity.{ts,js}'],
       logger: 'simple-console',
-      synchronize: true,
+      synchronize: this.config.get<boolean>('DATABASE_SYNC'),
       autoLoadEntities: true,
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      ssl: this.config.get<string>('DATABASE_URL')
+        ? this.config.get<object>('DATABASE_SSL')
+        : false,
     };
   }
 }

@@ -1,8 +1,27 @@
 <mat-card class="project-card">
-  <mat-card-title>{{ title }}</mat-card-title>
+  <mat-card-title
+    >{{ title }}
+    <button
+      mat-icon-button
+      class="icon-remove-all"
+      (click)="removeProject(projectId)"
+    >
+      <mat-icon>delete_sweep</mat-icon>
+    </button>
+  </mat-card-title>
   <mat-card-content class="project-card-content">
-    <section class="todos-section" *ngFor="let todo of todos">
-      <mat-checkbox>{{ todo.title }}</mat-checkbox>
+    <section
+      class="todos-section"
+      *ngFor="let todo of todos | sortByField: 'id'"
+    >
+      <mat-checkbox
+        [checked]="todo.isCompleted"
+        (change)="updateTodo(projectId, todo.id)"
+        >{{ todo.title }}</mat-checkbox
+      >
+      <button mat-icon-button class="icon-remove" (click)="removeTodo(todo.id)">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
     </section>
   </mat-card-content>
 </mat-card>

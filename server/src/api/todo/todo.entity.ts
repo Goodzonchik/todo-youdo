@@ -19,7 +19,7 @@ export class Todo {
   @Column({ type: 'boolean', default: false })
   public isCompleted: boolean;
 
-  @ManyToOne(() => Project, (project) => project.todos)
+  @ManyToOne(() => Project, (project) => project.todos, { onDelete: 'CASCADE' })
   project: Project;
 
   @CreateDateColumn({ type: 'timestamp' })

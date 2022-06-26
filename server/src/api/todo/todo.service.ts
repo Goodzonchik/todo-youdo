@@ -13,6 +13,13 @@ export class TodoService {
   @InjectRepository(Todo)
   private readonly todoRepository: Repository<Todo>;
 
+  async getOneById(id: number): Promise<Todo> {
+    const todo = await this.todoRepository.findOneBy({
+      id: id,
+    });
+    return todo;
+  }
+
   async createTodo(body: CreateTodoDto): Promise<Todo> {
     const todo: Todo = new Todo();
     const project = await this.projectService.findProject(body.project);
@@ -34,5 +41,10 @@ export class TodoService {
       await this.todoRepository.save(todo);
     }
     return todo;
+  }
+
+  async removeTodo(id: number): Promise<Todo> {
+    const todo = await this.getOneById(id);
+    return this.todoRepository.remove(todo);
   }
 }

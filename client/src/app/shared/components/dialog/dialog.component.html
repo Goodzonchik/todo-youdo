@@ -1,33 +1,86 @@
-<p mat-dialog-title>НОВАЯ ЗАДАЧА</p>
-<div mat-dialog-content class="dialog-content">
-  <mat-form-field class="todo-tittle" appearance="outline">
-    <input
-      matInput
-      [formControl]="TodoTitleFormControl"
-      placeholder="Название задачи..."
-    />
-    <mat-error *ngIf="TodoTitleFormControl.hasError('required')">
-      Введите название задачи
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field class="project-title" appearance="outline">
-    <mat-label>Категория</mat-label>
-    <mat-select [(ngModel)]="selectedValue" name="projects" disableRipple>
-      <mat-option *ngFor="let project of projects" [value]="project.value">
-        {{ project.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-flat-button mat-dialog-close color="primary">Отмена</button>
-  <span class="spacer"></span>
-  <button
-    mat-flat-button
-    mat-dialog-submit
-    [disabled]="TodoTitleFormControl.hasError('required')"
-    color="primary"
-  >
-    Ок
-  </button>
+<div class="dialog-wrapper">
+  <p mat-dialog-title>НОВАЯ ЗАДАЧА</p>
+  <div mat-dialog-content class="dialog-content">
+    <form [formGroup]="projectForm">
+      <mat-form-field class="todo-tittle" appearance="outline">
+        <input
+          matInput
+          #todoTitle
+          [formControl]="todoTitleControl"
+          name="todo"
+          placeholder="Название задачи..."
+          maxlength="50"
+        />
+        <mat-hint align="end">{{ todoTitle.value.length }} / 50</mat-hint>
+        <mat-error *ngIf="todoTitleControl.hasError('required')">
+          Поле не может быть пустым
+        </mat-error>
+      </mat-form-field>
+      <div
+        *ngIf="projectTitleControl.value == '0'; then thenBlock; else elseBlock"
+      ></div>
+      <ng-template #elseBlock>
+        <mat-form-field class="project-title" appearance="outline">
+          <mat-label>Категория</mat-label>
+          <mat-select
+            name="project"
+            disableRipple
+            [formControl]="projectTitleControl"
+          >
+            <mat-option
+              *ngFor="let selected of category"
+              [value]="selected.index"
+            >
+              {{ selected.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="projectTitleControl.hasError('required')">
+            Выберите категорию
+          </mat-error>
+        </mat-form-field>
+      </ng-template>
+      <ng-template #thenBlock>
+        <mat-form-field class="project-title" appearance="outline">
+          <input
+            matInput
+            #projectTitle
+            [formControl]="newCategoryControl"
+            name="category"
+            placeholder="Название категории..."
+            maxlength="30"
+          />
+          <button
+            *ngIf="projectTitleControl.value == '0'"
+            matSuffix
+            mat-icon-button
+            (click)="projectTitleControl.reset(); newCategoryControl.reset()"
+          >
+            <mat-icon>backspace</mat-icon>
+          </button>
+          <mat-hint align="end">{{ projectTitle.value.length }} / 30</mat-hint>
+          <mat-error *ngIf="newCategoryControl.hasError('required')">
+            Поле не может быть пустым
+          </mat-error>
+        </mat-form-field>
+      </ng-template>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-flat-button mat-dialog-close class="dialog-close">
+      Отмена
+    </button>
+    <button
+      mat-flat-button
+      mat-dialog-submit
+      class="dialog-submit"
+      [disabled]="
+        projectTitleControl.value == '0'
+          ? !projectForm.valid
+          : !(projectTitleControl.valid && todoTitleControl.valid)
+      "
+      (click)="makeTodo()"
+    >
+      Ок
+    </button>
+  </div>
 </div>
