@@ -20,7 +20,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       logger: 'simple-console',
       synchronize: this.config.get<boolean>('DATABASE_SYNC'),
       autoLoadEntities: true,
-      ssl: this.config.get<string>('DATABASE_URL')
+      ssl: this.config.get<string>('DATABASE_PROD')
         ? this.config.get<object>('DATABASE_SSL')
         : false,
     };
