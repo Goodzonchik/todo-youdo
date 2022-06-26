@@ -8,13 +8,13 @@ import { ProjectService } from '../project/project.service';
 @Injectable()
 export class TodoService {
   @Inject(ProjectService)
-  private readonly projectService: ProjectService;
+  private readonly _projectService: ProjectService;
 
   @InjectRepository(Todo)
-  private readonly todoRepository: Repository<Todo>;
+  private readonly _todoRepository: Repository<Todo>;
 
   async getOneById(id: number): Promise<Todo> {
-    const todo = await this.todoRepository.findOneBy({
+    const todo = await this._todoRepository.findOneBy({
       id: id,
     });
     return todo;
@@ -22,14 +22,14 @@ export class TodoService {
 
   async createTodo(body: CreateTodoDto): Promise<Todo> {
     const todo: Todo = new Todo();
-    const project = await this.projectService.findProject(body.project);
+    const project = await this._projectService.findProject(body.project);
     todo.title = body.title;
     todo.project = project;
-    return this.todoRepository.save(todo);
+    return this._todoRepository.save(todo);
   }
 
   async changeTodoStatus(projectId: number, todoId: number): Promise<Todo> {
-    const todo = await this.todoRepository
+    const todo = await this._todoRepository
       .createQueryBuilder()
       .select('todo')
       .from(Todo, 'todo')
@@ -38,13 +38,13 @@ export class TodoService {
       .getOne();
     if (todo) {
       todo.isCompleted = !todo.isCompleted;
-      await this.todoRepository.save(todo);
+      await this._todoRepository.save(todo);
     }
     return todo;
   }
 
   async removeTodo(id: number): Promise<Todo> {
     const todo = await this.getOneById(id);
-    return this.todoRepository.remove(todo);
+    return this._todoRepository.remove(todo);
   }
 }

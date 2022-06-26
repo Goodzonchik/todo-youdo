@@ -6,16 +6,16 @@ import { Project } from './project.entity';
 @Injectable()
 export class ProjectService {
   @InjectRepository(Project)
-  private readonly projectRepository: Repository<Project>;
+  private readonly _projectRepository: Repository<Project>;
 
   public getAllProjects(): Promise<Project[]> {
-    return this.projectRepository.find({
+    return this._projectRepository.find({
       relations: ['todos'],
     });
   }
 
   public async findProject(title: string): Promise<Project | undefined> {
-    const project: Project | undefined = await this.projectRepository.findOne({
+    const project: Project | undefined = await this._projectRepository.findOne({
       select: ['id'],
       where: { title: title },
     });
@@ -27,7 +27,7 @@ export class ProjectService {
   }
 
   async getOneById(id: number): Promise<Project> {
-    const project = await this.projectRepository.findOneBy({
+    const project = await this._projectRepository.findOneBy({
       id: id,
     });
     return project;
@@ -36,11 +36,11 @@ export class ProjectService {
   async createProject(title: string): Promise<Project> {
     const project: Project = new Project();
     project.title = title;
-    return this.projectRepository.save(project);
+    return this._projectRepository.save(project);
   }
 
   async removeProject(id: number): Promise<Project> {
     const project = await this.getOneById(id);
-    return this.projectRepository.remove(project);
+    return this._projectRepository.remove(project);
   }
 }

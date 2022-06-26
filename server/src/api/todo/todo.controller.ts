@@ -15,11 +15,11 @@ import { TodoService } from './todo.service';
 @Controller('projects')
 export class TodoController {
   @Inject(TodoService)
-  private readonly service: TodoService;
+  private readonly _service: TodoService;
 
   @Post('todos')
   public createTodo(@Body() body: CreateTodoDto): Promise<Todo> {
-    return this.service.createTodo(body);
+    return this._service.createTodo(body);
   }
 
   @Patch(':projectid/todos/:todoid')
@@ -27,11 +27,11 @@ export class TodoController {
     @Param('projectid', ParseIntPipe) projectId: number,
     @Param('todoid', ParseIntPipe) todoId: number,
   ): Promise<Todo> {
-    return this.service.changeTodoStatus(projectId, todoId);
+    return this._service.changeTodoStatus(projectId, todoId);
   }
 
   @Delete('todos/:id')
   public removeTodo(@Param('id', ParseIntPipe) id: number): Promise<Todo> {
-    return this.service.removeTodo(id);
+    return this._service.removeTodo(id);
   }
 }
