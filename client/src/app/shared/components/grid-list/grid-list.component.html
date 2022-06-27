@@ -1,5 +1,6 @@
-<div class="flex-container" *ngFor="let project of projects | sortByLength">
+<div class="flex-container">
   <app-card
+    *ngFor="let project of projects | sortByLength"
     [title]="project.title"
     [projectId]="project.id"
     [todos]="project.todos"
