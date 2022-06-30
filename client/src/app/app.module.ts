@@ -14,7 +14,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     NoopAnimationsModule,
     SharedModule,
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

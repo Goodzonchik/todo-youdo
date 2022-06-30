@@ -1,18 +1,13 @@
-import { apiService } from '../../../services/api.service';
-import { Component, OnInit, Inject } from '@angular/core';
+import { ApiService } from '../../../services/api.service';
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   Validators,
   FormBuilder,
   FormControl,
 } from '@angular/forms';
-import { Projects, Todo } from '../../models/models';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
-interface Category {
-  index: number;
-  value: string;
-}
+import { Category, Project, Todo } from '../../models/models';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog',
@@ -21,15 +16,14 @@ interface Category {
 })
 export class DialogComponent implements OnInit {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: Projects[],
     private _formBuilder: FormBuilder,
-    private _api: apiService,
+    private _api: ApiService,
     private _dialogRef: MatDialogRef<DialogComponent>
   ) {}
 
   projectForm!: FormGroup;
-  projects: Projects[];
-  category: Category[] = [{ index: 0, value: 'Новая категория' }];
+  projects: Project[];
+  category: Category[];
 
   projectTitleControl = new FormControl('', Validators.required);
   todoTitleControl = new FormControl('', Validators.required);
@@ -42,18 +36,7 @@ export class DialogComponent implements OnInit {
       newCategory: this.newCategoryControl,
     });
 
-    this.projects = this.data;
-    this.category = this.createCategory();
-  }
-
-  createCategory(): Category[] {
-    for (let i = 0; i < this.projects.length; i++) {
-      this.category.push({
-        index: i + 1,
-        value: this.projects[i].title,
-      });
-    }
-    return this.category;
+    this.category = this._api.getCategories();
   }
 
   makeTodo() {
@@ -65,8 +48,7 @@ export class DialogComponent implements OnInit {
       todo.project =
         this.category[parseInt(this.projectTitleControl.value!)].value;
     }
-    this._api.postTodo(todo).subscribe(() => {
-      this._dialogRef.close();
-    });
+    this._api.postTodo(todo);
+    this._dialogRef.close();
   }
 }

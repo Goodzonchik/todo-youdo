@@ -29,13 +29,14 @@ export class TodoService {
   }
 
   async changeTodoStatus(projectId: number, todoId: number): Promise<Todo> {
-    const todo = await this._todoRepository
-      .createQueryBuilder()
-      .select('todo')
-      .from(Todo, 'todo')
-      .where('todo.id = :todoId', { todoId: todoId })
-      .andWhere('todo.projectId = :projectId', { projectId: projectId })
-      .getOne();
+    const todo = await this._todoRepository.findOne({
+      where: {
+        id: todoId,
+        project: {
+          id: projectId,
+        },
+      },
+    });
     if (todo) {
       todo.isCompleted = !todo.isCompleted;
       await this._todoRepository.save(todo);

@@ -1,4 +1,4 @@
-export interface Projects {
+export interface Project {
   id: number;
   title: string;
   todos: Todos[];
@@ -8,6 +8,10 @@ export interface Todos {
   id: number;
   title: string;
   isCompleted: boolean;
+  project: {
+    id: number;
+    title: string;
+  };
 }
 
 export class Todo {
@@ -15,4 +19,7 @@ export class Todo {
   title: string;
 }
 
-export type Project = Pick<Projects, 'title'>;
+export interface Category {
+  index: number;
+  value: string;
+}
