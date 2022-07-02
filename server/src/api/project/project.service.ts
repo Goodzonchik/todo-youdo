@@ -1,3 +1,4 @@
+import { CreateProjectDto } from './project.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -14,18 +15,6 @@ export class ProjectService {
     });
   }
 
-  public async findProject(title: string): Promise<Project | undefined> {
-    const project: Project | undefined = await this._projectRepository.findOne({
-      select: ['id'],
-      where: { title: title },
-    });
-    if (project) {
-      return project;
-    }
-    const newProject = await this.createProject(title);
-    return newProject;
-  }
-
   async getOneById(id: number): Promise<Project> {
     const project = await this._projectRepository.findOneBy({
       id: id,
@@ -33,9 +22,10 @@ export class ProjectService {
     return project;
   }
 
-  async createProject(title: string): Promise<Project> {
+  async createProject(body: CreateProjectDto): Promise<Project> {
     const project: Project = new Project();
-    project.title = title;
+    project.title = body.title;
+    project.todos = [];
     return this._projectRepository.save(project);
   }
 

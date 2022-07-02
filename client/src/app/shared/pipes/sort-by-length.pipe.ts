@@ -13,9 +13,11 @@ export class ArraySortLengthPipe implements PipeTransform {
       return [];
     }
     array.sort((a: Project, b: Project) => {
-      if (a.todos.length > b.todos.length) {
+      const lenghtA = a.todos.length ? a.todos.length : 0;
+      const lenghtB = b.todos.length ? b.todos.length : 0;
+      if (lenghtA > lenghtB) {
         return -1;
-      } else if (a.todos.length < b.todos.length) {
+      } else if (lenghtA < lenghtB) {
         return 1;
       } else {
         return 0;

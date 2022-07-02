@@ -1,6 +1,6 @@
 import { ApiService } from './../../../services/api.service';
 import { Component, Input } from '@angular/core';
-import { Todos } from '../../models/models';
+import { Todo } from '../../models/models';
 
 @Component({
   selector: 'app-card',
@@ -12,17 +12,17 @@ export class CardComponent {
 
   @Input() projectId: number;
   @Input() title: string;
-  @Input() todos: Todos[];
+  @Input() todos: Todo[];
 
-  // removeProject(projectId: number) {
-  //   this._api.deleteProject(projectId).subscribe(() => {});
-  // }
+  removeProject(projectId: number) {
+    this._api.deleteProject(projectId);
+  }
 
-  // removeTodo(todoId: number) {
-  //   this._api.deleteTodo(todoId).subscribe(() => {});
-  // }
+  removeTodo(todoId: number) {
+    this._api.deleteTodo(todoId);
+  }
 
   updateTodo(projectId: number, todoId: number) {
-    this._api.patchTodo(projectId, todoId).subscribe(() => {});
+    this._api.patchTodo(projectId, todoId);
   }
 }

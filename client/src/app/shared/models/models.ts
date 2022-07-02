@@ -1,25 +1,29 @@
 export interface Project {
   id: number;
   title: string;
-  todos: Todos[];
+  todos: Todo[];
 }
 
-export interface Todos {
+export interface Todo {
   id: number;
   title: string;
   isCompleted: boolean;
-  project: {
-    id: number;
-    title: string;
-  };
+  project: ProjectLink;
 }
 
-export class Todo {
-  project: string;
+export interface ProjectBody {
+  title: string;
+  todos: Todo[];
+}
+
+export interface TodoBody {
+  projectId: number;
   title: string;
 }
 
 export interface Category {
-  index: number;
-  value: string;
+  id: number | string;
+  title: string;
 }
+
+type ProjectLink = Omit<Project, 'todos'>;

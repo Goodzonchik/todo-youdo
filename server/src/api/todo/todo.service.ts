@@ -22,7 +22,7 @@ export class TodoService {
 
   async createTodo(body: CreateTodoDto): Promise<Todo> {
     const todo: Todo = new Todo();
-    const project = await this._projectService.findProject(body.project);
+    const project = await this._projectService.getOneById(body.projectId);
     todo.title = body.title;
     todo.project = project;
     return this._todoRepository.save(todo);

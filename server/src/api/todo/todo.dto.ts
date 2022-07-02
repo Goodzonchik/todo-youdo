@@ -1,4 +1,4 @@
 export class CreateTodoDto {
-  public project: string;
+  public projectId: number;
   public title: string;
 }
